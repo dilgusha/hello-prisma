@@ -32,3 +32,4 @@ npm run start:dev
 
 # DB .env
 DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+JWT_SECRET=''
