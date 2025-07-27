@@ -9,6 +9,7 @@ import { ClsModule } from 'nestjs-cls';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from './database/database.module';
+import { TagModule } from './app/tag/tag.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { DatabaseModule } from './database/database.module';
     UserModule,
     AuthModule,
     TodoModule,
-    DatabaseModule],
+    DatabaseModule,
+    TagModule],
   controllers: [AppController],
   providers: [
     {

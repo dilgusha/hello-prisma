@@ -60,6 +60,12 @@ export class TodoController {
   }
 
 
+  @Post(':todoId/tag/:tagId')
+  @ApiOperation({ summary: 'Add Tag to Todo' })
+  addTagToTodo(@Param('todoId') todoId: number, @Param('tagId') tagId: number) {
+    return this.todoService.addTagToTodo(todoId, tagId);
+  }
+
 
 
 }

@@ -34,7 +34,10 @@ export class TodoService {
                 userId: myUser.id
             },
             orderBy: {
-                createdAt: 'desc'
+                createdAt: 'desc',
+            },
+            include: {
+                tags: true, 
             }
         })
     }
@@ -139,6 +142,40 @@ export class TodoService {
             },
         });
         return todos;
+    }
+
+    async addTagToTodo(todoId: number, tagId: number) {
+        const myUser = await this.cls.get<User>('user')
+        if (!myUser) {
+            throw new HttpException("User not found in context", HttpStatus.NOT_FOUND);
+        }
+        const todo = await this.prisma.todo.findUnique({
+            where: {
+                id: Number(todoId),
+            }
+        })
+        const tag = await this.prisma.tag.findUnique({
+            where: {
+                id: Number(tagId),
+            }
+        })
+        if (!todo || !tag) {
+            throw new HttpException("Todo or Tag not found", HttpStatus.NOT_FOUND);
+        }
+        if (myUser.role == 'ADMIN' || todo?.userId == myUser.id) {
+            return this.prisma.todo.update({
+                where: {
+                    id: Number(todoId)
+                },
+                data: {
+                    tags: {
+                        connect: { id: Number(tagId) }
+                    }
+                }
+            })
+        }
+        throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+
     }
 
 }

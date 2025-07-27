@@ -24,6 +24,6 @@ import { ClsModule, ClsService } from 'nestjs-cls';
   ],
   controllers: [AuthController],
   providers: [AuthService, PrismaService,UserService],
-  exports: [JwtModule],
+  exports: [JwtModule, AuthModule],
 })
 export class AuthModule { }
