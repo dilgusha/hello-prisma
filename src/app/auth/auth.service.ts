@@ -40,7 +40,7 @@ export class AuthService {
 
     const payload = {
       // userId: newUser.id,
-      roles: [newUser.role]  // Kullanıcının rollerini burada ekliyoruz
+      roles: [newUser.role]  
     };
     const token = this.jwtService.sign(payload);
     // const token = this.jwtService.sign({ userId: newUser.id });

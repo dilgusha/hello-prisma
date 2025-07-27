@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: nestjs-todo
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - todo-network
+    volumes:
+      - .:/app
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-todo
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todo_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - todo-network
+
+volumes:
+  pgdata:
+
+networks:
+  todo-network:

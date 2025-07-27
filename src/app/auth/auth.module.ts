@@ -10,12 +10,12 @@ import { ClsModule, ClsService } from 'nestjs-cls';
 
 @Module({
   imports: [
-    UserModule,  // UserModule-u burada import edin
+    UserModule,  
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),  // JWT_SECRET .env-dən oxunur
-        signOptions: { expiresIn: '1h' },  // Token müddətini təyin edin
+        secret: configService.get<string>('JWT_SECRET'),  
+        signOptions: { expiresIn: '1h' },  
       }),
       inject: [ConfigService],
     }),

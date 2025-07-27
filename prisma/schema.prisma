@@ -5,14 +5,16 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum Role {
   USER
   ADMIN
@@ -22,8 +24,8 @@ model User {
   id       Int    @id @default(autoincrement())
   userName String @unique
   password String
-  role     Role 
-  todos    Todo[]  
+  role     Role
+  todos    Todo[]
 }
 
 model Todo {
@@ -33,7 +35,6 @@ model Todo {
   completed   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
 }

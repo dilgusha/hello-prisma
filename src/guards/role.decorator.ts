@@ -1,8 +1,3 @@
-// import { SetMetadata } from '@nestjs/common';
-
-// // 'roles' metadata'sını set ediyoruz
-// export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
-
 
 import { SetMetadata } from '@nestjs/common';
 import { Role } from '@prisma/client';

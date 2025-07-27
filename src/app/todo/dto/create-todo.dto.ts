@@ -18,3 +18,5 @@ export class CreateTodoDto {
     completed?: boolean;
 
 }
+
+export class UpdateTodoDto extends CreateTodoDto{}

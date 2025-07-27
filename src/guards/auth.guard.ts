@@ -18,29 +18,25 @@ export class AuthGuard implements CanActivate {
         const req = context.switchToHttp().getRequest();
         const authHeader = req.headers.authorization;
 
-        // Authorization header'ının doğru olup olmadığını kontrol ediyoruz
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             throw new UnauthorizedException('Invalid or missing authorization header');
         }
 
-        const token = authHeader.split(' ')[1];  // Token'ı header'dan alıyoruz
+        const token = authHeader.split(' ')[1];  
         try {
-            const payload = await this.jwtService.verify(token);  // JWT token'ı doğruluyoruz
+            const payload = await this.jwtService.verify(token);  
             if (!payload.userId) throw new UnauthorizedException('Invalid token payload');
 
-            // Kullanıcıyı Prisma ile buluyoruz
             const user = await this.prisma.user.findUnique({
-                where: { id: payload.userId },  // Prisma ile kullanıcıyı ID'ye göre buluyoruz
+                where: { id: payload.userId },  
             });
             if (!user) throw new UnauthorizedException('User not found');
 
-            // CLS Service ile kullanıcı bilgisini set ediyoruz
             this.cls.set('user', user);
 
-            // Roller doğrulaması
             const roles = this.reflector.get<Role[]>('roles', context.getHandler());
             if (roles && roles.length > 0) {
-                const hasRole = roles.some((role) => user.role?.includes(role));  // Kullanıcının rolünü kontrol ediyoruz
+                const hasRole = roles.some((role) => user.role?.includes(role));  
                 if (!hasRole) {
                     throw new ForbiddenException('You do not have permission to access this resource');
                 }
@@ -52,6 +48,6 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException('Authentication failed');
         }
 
-        return true;  // Kullanıcı doğrulandıysa, access izni veriyoruz
+        return true;  
     }
 }

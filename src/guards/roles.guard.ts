@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';  // Metadata'yı almak için kullanıyoruz
+import { Reflector } from '@nestjs/core'; 
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -8,21 +8,21 @@ export class RolesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     if (!roles) {
-      return true;  // Eğer roller tanımlanmamışsa, erişim izni verilir
+      return true;  
     }
 
     const request = context.switchToHttp().getRequest();
-    const user = request.user;  // Kullanıcı bilgisi (JWT doğrulaması sonrası)
+    const user = request.user; 
 
     if (!user) {
       throw new ForbiddenException('No user found');
     }
 
-    const hasRole = roles.some(role => user.roles?.includes(role));  // Kullanıcının rolünü kontrol et
+    const hasRole = roles.some(role => user.roles?.includes(role)); 
     if (!hasRole) {
       throw new ForbiddenException('You do not have permission to access this resource');
     }
 
-    return true;  // Kullanıcı uygun role sahipse, erişim sağlanır
+    return true; 
   }
 }

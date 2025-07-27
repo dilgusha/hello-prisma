@@ -4,8 +4,8 @@ import { Type } from "class-transformer";
 import { IsEmail, IsEnum, IsInt, IsOptional, IsString, Length } from "class-validator";
 
 export class CreateUserDto {
-    @IsInt()
-    userId: number;
+    // @IsInt()
+    // userId: number;
 
     @ApiProperty()
     @IsString()
@@ -18,6 +18,6 @@ export class CreateUserDto {
     @ApiProperty()
     password: string;
 
-    @IsEnum(Role)
-    role: Role;
+    // @IsEnum(Role)
+    // role: Role;
 }
